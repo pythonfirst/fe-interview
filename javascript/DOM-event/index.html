@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM event</title>
+  <link rel="stylesheet" href="./style.css ">
+</head>
+<body>
+  <button id="DOM-0-btn" type="button">DOM-0-level button</button>
+  <button id="DOM-2-btn" type="button">DOM-2-level button</button>
+  <button id="custom-event" type="button">custom-event button</button>
+
+  <div class="parent" id="parent">
+    <div class="child" id="child">child (target element)</div>
+    父元素
+  </div>
+  <!-- 参考文档https://juejin.cn/post/6844903767863738381 -->
+  <a href="https://juejin.cn/post/6844903767863738381">参考文档</a>
+  <script>
+    
+    /**
+     * DOM0 级事件，只能设置一个事件处理函数
+     */
+    let DOM0Btn = document.getElementById('DOM-0-btn');
+    DOM0Btn.onclick = function() {
+      console.log('button clicked by DOM-0 levels');
+    }
+
+    /**
+     * DOM2 级事件，可以设置多个事件处理函数，可以通过第三个参数（useCapture)设置在什么阶段执行事件处理函数
+     * 默认为false，在事件冒泡阶段执行事件处理函数。
+    */
+    let DOM2Btn = document.getElementById('DOM-2-btn');
+    DOM2Btn.addEventListener('click', () => {
+      console.log('button clicked by DOM-0 levels by first callback');
+    }, false)
+
+    DOM2Btn.addEventListener('click', () => {
+      console.log('button clicked by DOM-0 levels by second callback');
+    }, false);
+
+    /**
+     * DOM3 级事件在DOM2级事件基础上增加更多事件类型： UI/焦点/鼠标/键盘；支持自定义；
+     */
+    let event = new Event('test');
+
+    customEventDom = document.getElementById('custom-event')
+    customEventDom.addEventListener('test', () => {
+      console.log('custom event test')
+    })
+
+    setTimeout(() => {
+      customEventDom.dispatchEvent(event)
+    }, 5000)
+
+
+    /**
+     * 事件冒泡：事件开始是由最具体的元素（目标元素）接收，然后逐级向上传播
+     */
+    let DOMParent = document.getElementById('parent');
+    let DOMChild = document.getElementById('child');
+
+    DOMChild.addEventListener('click', (e) => {
+      console.log('child click event');
+      // e.stopPropagation();// 阻止冒泡
+      e.preventDefault(); // 阻止浏览器默认行为
+    }, false);
+
+    DOMParent.addEventListener('click', () => {
+      console.log('parent click event')
+    }, false);
+
+    document.body.addEventListener('click', () => {
+      console.log('body click event')
+    }, false)
+
+    document.documentElement.addEventListener('click', () => {
+      console.log('html click event')
+    }, false)
+
+    document.addEventListener('click', () => {
+      console.log('document click event')
+    }, false)
+
+    window.addEventListener('click', () => {
+      console.log('window click event')
+    }, false)
+
+    /**
+     * 事件捕获：事件开始是由最具体的元素（目标元素）接收，然后逐级向上传播
+     */
+
+    DOMChild.addEventListener('click', () => {
+      console.log('child click event')
+    }, true);
+
+    DOMParent.addEventListener('click', () => {
+      console.log('parent click event')
+    }, true);
+
+    document.body.addEventListener('click', () => {
+      console.log('body click event')
+    }, true)
+
+    document.documentElement.addEventListener('click', () => {
+      console.log('html click event')
+    }, true)
+
+    document.addEventListener('click', () => {
+      console.log('document click event')
+    }, true)
+
+    window.addEventListener('click', () => {
+      console.log('window click event')
+    }, true)
+
+    /**
+     * 事件参数
+     */
+    DOMChild.addEventListener('click', (e) => {
+      console.log('target', e.target)
+      console.log('current target', e.currentTarget)
+      console.log('this', this)
+    }, true);
+
+    /**
+     * 事件监听函数中的this为window(箭头函数)
+     */
+    DOMParent.addEventListener('click', (e) => {
+      console.log('target', e.target)
+      console.log('current target', e.currentTarget)
+      console.log('this', this)
+    }, true);
+
+    /**
+     * 事件监听函数中的this为currentTarget
+     */
+    DOMParent.addEventListener('click', function(e) {
+      console.log('target', e.target)
+      console.log('current target', e.currentTarget)
+      console.log('this', this)
+    }, true);
+
+    
+  </script>
+</body>
+</html>
