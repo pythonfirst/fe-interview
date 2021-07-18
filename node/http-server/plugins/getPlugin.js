@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const heaerUtils = require('../utils/headers');
 
 module.exports = (message, env) => {
   // 如果request method不是post，直接返回message
@@ -42,6 +43,28 @@ module.exports = (message, env) => {
       message.response.status = 200;
       return message;
     } else if (pathStat.isFile()) { // 非目录
+      // 处理206
+      const rangeHeader = heaerUtils.readHeaer(message.request.headers, 'Range'); // 读取 request header range
+      if (rangeHeader) {
+        // Range: bytes=start-end
+        // bytes=1-2
+        const matchedRange = rangeHeader.match(/bytes\s*=\s*(\d+)\s*-\s*(\d+)/i);
+  
+        if (matchedRange) {
+          const content = Buffer.alloc(matchedRange[2]-matchedRange[1]+1);
+
+          const fd = fs.openSync(requestPath);
+          fs.readSync(fd, content, 0, content.length, parseInt(matchedRange[1]));
+          fs.closeSync(fd);
+          message.response.body = content;
+          message.response.status = 206;
+          heaerUtils.setHeader(
+            message.response.headers,
+            'Content-Range',
+            `bytes ${matchedRange[1]}-${matchedRange[2]}/${pathStat.size}`)
+          return message
+        }
+      }
       // read content
       message.response.body = fs.readFileSync(requestPath);
       message.response.status = 200;

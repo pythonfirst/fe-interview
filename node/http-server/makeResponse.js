@@ -1,6 +1,7 @@
 const reasonPharseMap = {
   200: 'ok',
   201: 'created',
+  206: 'Partial Content',
   403: 'Forbidden',
   404: 'Not Found',
   500: 'Internal Server Error',

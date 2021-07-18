@@ -12,6 +12,8 @@ module.exports = connection => {
   const env = {
     root: path.resolve('./www'),
   }
+  console.log('env', env.root)
+  // TODO: 开调试模式，windows上和直接跑不同
   // 是否有数据；如果有数据读取数据解析
   connection.on('data', (buffer) => {
     parser.append(buffer);
