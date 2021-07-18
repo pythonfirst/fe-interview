@@ -3,7 +3,7 @@ const fs = require('fs');
 
 module.exports = (message, env) => {
   // 如果request method不是post，直接返回message
-  if (message.request.method !== 'PUT') {
+  if (message.request.method !== 'DELETE') {
     return message;
   }
 
@@ -27,8 +27,9 @@ module.exports = (message, env) => {
 
   // 判断是否为文件
   const pathStat = fs.statSync(requestPath);
-  if (pathStat.isFile()) { // 是文件则覆盖文件
-    fs.writeFileSync(requestPath, message.request.body);
+  if (pathStat.isFile()) { // 是文件则删除文件
+    // 删除文件
+    fs.unlinkSync(requestPath);
     message.response.status = 200;
     return message
   } else { // 不是文件返回403

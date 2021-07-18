@@ -4,6 +4,7 @@ const postPlugin = require('./plugins/postPlugin');
 const path = require('path');
 const getPlugin = require('./plugins/getPlugin');
 const putPlugin = require('./plugins/putPlugin');
+const deletePlugin = require('./plugins/deletePlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -24,9 +25,7 @@ module.exports = connection => {
     message = postPlugin(message, env);
     message = getPlugin(message, env);
     message = putPlugin(message, env);
-    // ...
-    // make response
-    // message.response.body = Buffer.from('{"hello": "world"}', "ascii");
+    message = deletePlugin(message, env);
     response = makeResponse(message)
     connection.end(response);
   })
