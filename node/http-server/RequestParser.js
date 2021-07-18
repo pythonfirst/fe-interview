@@ -1,5 +1,4 @@
 const Events = require('events');  // 继承node 事件类
-const { read } = require('fs');
 
 class RequestParser extends Events {
 
