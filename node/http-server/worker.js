@@ -3,6 +3,7 @@ const RequestParser = require('./RequestParser');
 const postPlugin = require('./plugins/postPlugin');
 const path = require('path');
 const getPlugin = require('./plugins/getPlugin');
+const putPlugin = require('./plugins/putPlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -19,9 +20,10 @@ module.exports = connection => {
 
     // 设置root目录
     
-    // plugin 0
+    // plugin
     message = postPlugin(message, env);
     message = getPlugin(message, env);
+    message = putPlugin(message, env);
     // ...
     // make response
     // message.response.body = Buffer.from('{"hello": "world"}', "ascii");
