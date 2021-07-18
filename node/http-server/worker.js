@@ -2,6 +2,7 @@ const makeResponse = require('./makeResponse');
 const RequestParser = require('./RequestParser');
 const postPlugin = require('./plugins/postPlugin');
 const path = require('path');
+const getPlugin = require('./plugins/getPlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -20,6 +21,7 @@ module.exports = connection => {
     
     // plugin 0
     message = postPlugin(message, env);
+    message = getPlugin(message, env);
     // ...
     // make response
     // message.response.body = Buffer.from('{"hello": "world"}', "ascii");

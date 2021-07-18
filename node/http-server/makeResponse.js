@@ -1,7 +1,9 @@
 const reasonPharseMap = {
-  500: 'Internal Server Error',
-  403: 'Forbidden',
+  200: 'ok',
   201: 'created',
+  403: 'Forbidden',
+  404: 'Not Found',
+  500: 'Internal Server Error',
 }
 
 module.exports = (message) => {
