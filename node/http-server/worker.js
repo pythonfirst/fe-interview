@@ -6,6 +6,7 @@ const getPlugin = require('./plugins/getPlugin');
 const putPlugin = require('./plugins/putPlugin');
 const deletePlugin = require('./plugins/deletePlugin');
 const AUTHPlugin = require('./plugins/AUTHPlugin');
+const CORSPlugin = require('./plugins/CORSPlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -25,6 +26,7 @@ module.exports = connection => {
     // 设置root目录
     
     // plugin
+    message = CORSPlugin(message, env);
     message = AUTHPlugin(message, env);
     message = postPlugin(message, env);
     message = getPlugin(message, env);
