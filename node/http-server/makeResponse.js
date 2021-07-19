@@ -1,10 +1,11 @@
 const reasonPharseMap = {
-  200: 'ok',
-  201: 'created',
-  206: 'Partial Content',
-  403: 'Forbidden',
-  404: 'Not Found',
-  500: 'Internal Server Error',
+  200: 'ok',  // get put delete success
+  201: 'created', // post 新建成功
+  206: 'Partial Content', // 获取资源部分header: {Range: bytes=1-5}
+  401: 'Unauthorized',
+  403: 'Forbidden', // get put delete URL不合法；post目录
+  404: 'Not Found',  // get put delete url不存在
+  500: 'Internal Server Error',  // server不知道如何处理
 }
 
 module.exports = (message) => {
