@@ -14,7 +14,7 @@ module.exports = (message, env) => {
     return message
   }
 
-  headerUtils.setHeader(message.response.headers, 'Access-Control-Allow-Origin', 'http://ab.com');
+  headerUtils.setHeader(message.response.headers, 'Access-Control-Allow-Origin', 'http://a.com');
   headerUtils.setHeader(message.response.headers, 'Access-Control-Allow-Credentials', 'true');
 
   return message

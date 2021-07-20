@@ -7,6 +7,7 @@ const putPlugin = require('./plugins/putPlugin');
 const deletePlugin = require('./plugins/deletePlugin');
 const AUTHPlugin = require('./plugins/AUTHPlugin');
 const CORSPlugin = require('./plugins/CORSPlugin');
+const optionsPlugin = require('./plugins/optionsPlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -27,6 +28,7 @@ module.exports = connection => {
     
     // plugin
     message = CORSPlugin(message, env);
+    mesage = optionsPlugin(message, env);
     message = AUTHPlugin(message, env);
     message = postPlugin(message, env);
     message = getPlugin(message, env);

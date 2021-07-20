@@ -10,9 +10,12 @@
     <h1>cors跨域测试</h1>
     <script>
         xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'http://b.com/hello1.json');
         xhr.withCredentials = true;
-        xhr.open('POST', 'http://b.com/hahahah.txt');
-        xhr.send();
+        xhr.send(JSON.stringify({world: 'hello'}));
+        xhr.onload = (()=> {
+            console.log('res',  xhr.response)
+        })
 
     </script>
     
