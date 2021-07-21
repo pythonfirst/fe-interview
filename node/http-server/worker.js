@@ -1,13 +1,14 @@
 const makeResponse = require('./makeResponse');
 const RequestParser = require('./RequestParser');
-const postPlugin = require('./plugins/postPlugin');
 const path = require('path');
+const postPlugin = require('./plugins/postPlugin');
 const getPlugin = require('./plugins/getPlugin');
 const putPlugin = require('./plugins/putPlugin');
 const deletePlugin = require('./plugins/deletePlugin');
 const AUTHPlugin = require('./plugins/AUTHPlugin');
 const CORSPlugin = require('./plugins/CORSPlugin');
 const optionsPlugin = require('./plugins/optionsPlugin');
+const cachePlugin = require('./plugins/cachePlugin');
 
 module.exports = connection => {
   // stream 处理器
@@ -31,6 +32,7 @@ module.exports = connection => {
     mesage = optionsPlugin(message, env);
     message = AUTHPlugin(message, env);
     message = postPlugin(message, env);
+    message = cachePlugin(message, env);
     message = getPlugin(message, env);
     message = putPlugin(message, env);
     message = deletePlugin(message, env);

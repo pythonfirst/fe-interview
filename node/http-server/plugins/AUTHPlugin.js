@@ -3,7 +3,6 @@ const fs = require('fs');
 const headerUtils = require('../utils/headers');
 
 module.exports = (message, env) => {
-  console.log('message', message.request)
   // 如果response.status 不是0，直接返回message
   if (message.response.status !== 0) {
     return message;
@@ -40,7 +39,6 @@ module.exports = (message, env) => {
   } else {
     // 未携带登陆信息Authorization
     const cookieValue = headerUtils.readHeaer(message.request.headers, 'Cookie');
-    console.log('cookieValu', cookieValue, message.request.headers, message.request.method)
     if (cookieValue) {
       const sessionId = cookieValue.match(/sessionId=session_(\w+)/);
       const sessionPath = path.resolve(env.session, String(sessionId[1]));
@@ -55,7 +53,6 @@ module.exports = (message, env) => {
       } 
     }
   }
-  console.log('执行这里了', message.request.method, JSON.stringify(message.request.headers))
   // session不存在转向401
   headerUtils.setHeader(message.response.headers, 'www-Authenticate', 'basic realm="login"');
   message.response.status = 401;
