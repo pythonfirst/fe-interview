@@ -18,6 +18,15 @@
         })
 
     </script>
-    
+    <!-- jsonp实现跨域 -->
+    <script>
+        function callback(res) {
+        console.log(res);
+      }
+      var src = `http://b.com/1.txt`;
+      let script = document.createElement("script");
+      script.src = src;
+      document.getElementsByTagName("body")[0].appendChild(script);
+    </script>
 </body>
 </html>

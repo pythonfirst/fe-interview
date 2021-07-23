@@ -2,7 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const headerUtils = require('../utils/headers');
 
-function setCacheHeader(statis, message) {
+/**
+ * 设置缓存控制header
+ * @param {*} statis 
+ * @param {*} message 
+ * @param {*} pathStat 
+ */
+function setCacheHeader(statis, message, pathStat) {
   const Etag = statis.mtimeMs.toString(16)+pathStat.size.toString(16);
   headerUtils.setHeader(message.response.headers, 'Cache-Control', 'max-age=3600');
   headerUtils.setHeader(message.response.headers, 'Etag',Etag ); // TODO: 如何取到Etag
@@ -45,14 +51,14 @@ module.exports = (message, env) => {
    // if-Non-Match
    // 没有Etag
   if (!ifNonMatchValue) {
-    setCacheHeader(pathStat, message);
+    setCacheHeader(pathStat, message, pathStat);
     return message
   }
 
   // 比较摘要是否一致
   // 不一致，直接返回message交给get处理
   if (ifNonMatchValue !== Etag) {
-    setCacheHeader(pathStat, message);
+    setCacheHeader(pathStat, message, pathStat);
     return message
   }
 

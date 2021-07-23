@@ -18,10 +18,9 @@ module.exports = (message) => {
   const reasonPharse =reasonPharseMap[message.response.status];
 
   const statusLine = `${message.request.version} ${message.response.status} ${reasonPharse} \r\n`;
-
   message.response.headers.push({
     key: 'Content-Length',
-    value: message.response.body.length,
+    value: message.response.body?.length,
   })
   
   let headerLines = message.response.headers
