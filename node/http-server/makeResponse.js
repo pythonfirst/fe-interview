@@ -2,8 +2,8 @@ const reasonPharseMap = {
   200: 'ok',  // get put delete success
   201: 'created', // post 新建成功
   206: 'Partial Content', // 获取资源部分header: {Range: bytes=1-5}
-  304: 'Not Modified',
-  401: 'Unauthorized',
+  304: 'Not Modified',  // 未更改可以使用缓存
+  401: 'Unauthorized', // 用户未登陆/登陆失效
   403: 'Forbidden', // get put delete URL不合法；post目录
   404: 'Not Found',  // get put delete url不存在
   500: 'Internal Server Error',  // server不知道如何处理
