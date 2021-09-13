@@ -17,7 +17,7 @@ module.exports = connection => {
     root: path.resolve('./www'),
     session: path.resolve('./session'),
   }
-  // TODO: 开调试模式，windows上和直接跑不同
+  // TODO: 开调试模式，windows上和直接跑不通
   // 是否有数据；如果有数据读取数据解析
   connection.on('data', (buffer) => {
     parser.append(buffer);
