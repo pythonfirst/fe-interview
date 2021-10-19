@@ -409,6 +409,35 @@ const arr = Array.from(arrayLike, e=> e+'1');
 
 ### 函数柯里化
 
+[「前端进阶」彻底弄懂函数柯里化](https://juejin.cn/post/6844903882208837645)
+
+[从一道面试题认识函数柯里化](https://juejin.cn/post/6844903665308794888)
+
+```js
+/**
+ * 柯里化-支持传不固定参数;
+ * -function.length: 函数形参数量
+ * @param {*} func 
+ * @param {*} args 
+ * @returns 
+ */
+function curry(func, args) {
+	const length = func.length;
+	args = args|| [];
+
+	return function () {
+		newArgs = args.concat([].slice.call(arguments));
+
+		if (newArgs.length >= length) {
+
+			return func.apply(this, newArgs)
+		} else {
+			return curry.call(this, func, newArgs)
+		}
+	}
+}
+```
+
 ### 链式调用
 
 ### 实现parseUrl
@@ -523,7 +552,11 @@ function throttle(func, wait, options={}) {
 }
 ```
 
+### 实现Event（eventBus)
 
+### 实现promise
+
+[从一道让我失眠的 Promise 面试题开始，深入分析 Promise 实现细节](https://juejin.cn/post/6945319439772434469)
 
 ### 实现call&apply&bind
 
@@ -1059,6 +1092,8 @@ console.log(arr, arrC)
 
 #### promise 包装ajax
 
+版本1
+
 ```js
 /**
      * promise 封装XMLHttpRequest
@@ -1082,6 +1117,42 @@ console.log(arr, arrC)
   .then(res => {
     console.log('res', res)
   })
+```
+
+版本2
+
+```js
+function request(method='GET', url) {
+	return new Promise((resolved, rejected) => {
+		const xhr = new XMLHttpRequest();
+
+		xhr.open(method, url)
+		xhr.send();
+
+		xhr.onload = handler
+
+		xhr.onerror = handler
+
+
+		function handler() {
+			if (this.readyState !==4) return;
+
+			if (this.status === 200) {
+				resolved(this.response.slice)
+			} else {
+				rejected(this.status)
+			}
+		}
+	})
+}
+
+request('GET', 'https://juejin.cn/api/get')
+.then(res => {
+	console.log('res', res);
+})
+.catch(err => {
+	console.log('err', err);
+})
 ```
 
 

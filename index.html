@@ -17,17 +17,19 @@
     <button id="cancel">点击取消</button>
     <script src="./test.js"></script>
     <script>
+
       let count = 1;
 
       const container = document.getElementById('container');
       const cancel = document.getElementById('cancel');
 
       function getUserAction(e) {
+        console.log('e', e);
         container.innerHTML = count++;
         return 1
       }
 
-      const setUserAction = throttle(getUserAction, 3000, { leading: true, trailing: false});
+      const setUserAction = debounce(getUserAction, 1000, true);
       container.onmousemove = setUserAction;
       cancel.addEventListener('click', function() {
         setUserAction.cancel()

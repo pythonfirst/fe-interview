@@ -409,6 +409,8 @@ const arr = Array.from(arrayLike, e=> e+'1');
 
 ### 函数柯里化
 
+
+
 ### 链式调用
 
 ### 实现parseUrl
@@ -560,7 +562,7 @@ Function.prototype.apply2 = function (context) {
 	// 如果第一个参数传入null,则this为window
 	context = context || global;
 	// 将调用函数的参数取出来
-	const arr = arguments[1];
+	const arr = Array.from(arguments).slice(1)
 	// 将调用的函数this添加为context的方法
 	context.fn = this;
 	// 在context上调用该方法并返回该函数返回值
@@ -584,13 +586,6 @@ Function.prototype.apply2 = function (context) {
  * 4.1 支持继承绑定函数原型的属性。
  * @param {*} context 
  * @returns 
- */
-/**
- * 1. 返回一个函数
- * 2. 接收不固定参数
- * 3. 能够兼容作为构造函数
- * 4. 支持调用的非函数报错
- * @param {*} context 
  */
 Function.prototype.bind2 = function(context) {
 
