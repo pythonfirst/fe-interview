@@ -26,6 +26,8 @@ JSON.stringify({}) === '{}'
    IEEE 754标准
 
    [IEEE 754 64位双精度浮点类型](https://bytedance.feishu.cn/docs/doccniZIdVuvlPiK9iZJuHIThBg#qvqgW7)
+   
+   https://github.com/mqyqingfeng/Blog/issues/155
 
 ### 参考
 
